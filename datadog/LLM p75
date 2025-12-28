@@ -1,0 +1,23 @@
+{
+	"id": 246987526,
+	"name": "LLM p75 Latency Degradation – Gemini API",
+	"type": "query alert",
+	"query": "percentile(last_5m):p75:trace.http.request{service:llm-reliability-monitor,span.kind:client} > 8",
+	"message": "High LLM latency detected for the Gemini-powered application.\n\nThis may indicate:\n- Gemini API slowness\n- Increased prompt size\n- Model overload\n- Network/API issues\n\nNext steps:\n1. Open APM → Traces\n2. Filter by service: llm-reliability-monitor\n3. Inspect slow spans (Models.generateContent)\n4. Check upstream latency to generativelanguage.googleapis.com",
+	"tags": [
+		"service:llm-reliability-monitor"
+	],
+	"options": {
+		"thresholds": {
+			"critical": 8,
+			"warning": 5
+		},
+		"notify_audit": false,
+		"notify_no_data": false,
+		"renotify_interval": 0,
+		"new_host_delay": 300,
+		"include_tags": true
+	},
+	"priority": null,
+	"draft_status": "published"
+}

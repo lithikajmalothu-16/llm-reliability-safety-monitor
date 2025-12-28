@@ -1,0 +1,23 @@
+{
+	"id": 246988695,
+	"name": "If data is missing for 5 minutes → Evaluate as zero",
+	"type": "query alert",
+	"query": "sum(last_5m):sum:trace.http.request.errors{service:llm-reliability-monitor,span.kind:client}.as_count() / sum:trace.http.request.hits{service:llm-reliability-monitor,span.kind:client}.as_count() > 5",
+	"message": "🚨 High error rate detected in LLM application\n\nService: llm-reliability-monitor  \nError rate exceeded acceptable threshold.\n\nPossible causes:\n- Gemini / Vertex AI API errors\n- Invalid model responses\n- Network or authentication issues\n- Upstream service instability\n\nNext steps:\n1. Open APM → Traces\n2. Filter by service: llm-reliability-monitor\n3. Inspect failed spans (status_code:5xx)\n4. Check upstream spans to generativelanguage.googleapis.com\n5. Validate Gemini API quota and credentials\n\nImpact:\nUsers may be receiving failed or incomplete LLM responses.",
+	"tags": [
+		"service:llm-reliability-monitor"
+	],
+	"options": {
+		"thresholds": {
+			"critical": 5,
+			"warning": 2
+		},
+		"notify_audit": false,
+		"renotify_interval": 0,
+		"include_tags": true,
+		"on_missing_data": "default",
+		"new_host_delay": 300
+	},
+	"priority": null,
+	"draft_status": "published"
+}
