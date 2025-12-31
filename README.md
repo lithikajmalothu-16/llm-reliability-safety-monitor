@@ -52,6 +52,25 @@ Client → FastAPI → Gemini API
 - Incident timeline includes shared graphs and notes
 - Manual declaration used to demonstrate incident workflows
 
+## Service Level Objectives (SLOs)
+
+This project defines Service Level Objectives (SLOs to quantify the reliability of the LLM-backed FastAPI service beyond individual alerts.
+
+### Availability SLO
+- Measures successful request rate using APM trace data
+- Based on HTTP request hits vs errors
+- Target: 95% over a rolling 30-day window
+- Metric: trace.fastapi.request.hits.by_http_status
+
+### Latency SLO
+- Measures latency reliability via monitor uptime
+- Backed by a p75 latency degradation monitor
+- Target: 99% over a rolling 30-day window
+- Ensures sustained performance under varying traffic patterns
+
+SLOs are visualized in Datadog dashboards alongside monitors and incidents to provide a complete picture of application health and error budget consumption.
+
+
 ---
 
 ## Dashboards
@@ -86,6 +105,7 @@ datadog/
 This includes:
 - Dashboard JSON
 - Monitor definitions
+- Dashboard SLO
 
 ---
 
